@@ -6,6 +6,8 @@
 	<title>Document</title>
 </head>
 <body>
+	<button type="button" onclick="clearLocalStorage()">Clear All</button>
+	<img src = "https://image.freepik.com/free-vector/whatsapp-icon-design_23-2147900927.jpg" height="50" size="50" onclick="shareOnWA()">  
 	<table id="product_list_table"></table>
 	<script type="text/javascript">
 		let selected_products_la = JSON.parse(localStorage.getItem("selected_products"));
@@ -28,6 +30,27 @@
 			},
 		];
 
+		function clearLocalStorage() {
+			localStorage.setItem("selected_products", null);
+			location.reload();
+		}
+
+		function shareOnWA() {
+			console.log(selected_products_la);
+			let product_list_wa = '';
+			console.log(Object.keys(selected_products_la));
+			Object.keys(selected_products_la).forEach(product_name => {
+				product_list_wa += product_name.split('_').join(' ')+' : ';
+				let wa_qty = [];
+				Object.keys(selected_products_la[product_name]).forEach(product_quantity => {
+					wa_qty.push(selected_products_la[product_name][product_quantity]);
+				});
+				product_list_wa += wa_qty.join(', ')+'\n';
+			});
+			console.log(product_list_wa);
+			window.open('https://web.whatsapp.com://send?text='+product_list_wa);
+		}
+
 		function getProductHtmlByType(product) {
 			const types = product.product_quantity_type.split("_");
 			let selects = '';
@@ -36,13 +59,10 @@
 			types.forEach(type => {
 				selects += `<select name="${product_name + '-' + type}">`;
 				let is_selected = '';
-				console.log(selected_products_la);
 				let selected_value = '';
 				if (selected_products_la.hasOwnProperty(product_name)) {
 					if (selected_products_la[product_name].hasOwnProperty(type)) {
 						selected_value = selected_products_la[product_name][type];
-						console.log(selected_products_la[product_name]);
-						console.log(selected_value);
 					}
 				}
 				if (type === 'KG') {
