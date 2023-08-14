@@ -45,10 +45,10 @@
 				Object.keys(selected_products_la[product_name]).forEach(product_quantity => {
 					wa_qty.push(selected_products_la[product_name][product_quantity]);
 				});
-				product_list_wa += wa_qty.join(', ')+'\n<br />';
+				product_list_wa += wa_qty.join(', ')+'\n';
 			});
-			console.log(product_list_wa);
-			window.open("whatsapp://send?text=" + product_list_wa, '_blank');
+			console.log(encodeURIComponent(product_list_wa));
+			window.open("whatsapp://send?text=" + encodeURIComponent(product_list_wa), '_blank');
 		}
 
 		function getProductHtmlByType(product) {
