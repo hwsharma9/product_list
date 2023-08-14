@@ -38,7 +38,7 @@
 		function shareOnWA() {
 			console.log(selected_products_la);
 			let product_list_wa = '';
-			console.log(Object.keys(selected_products_la));
+			
 			Object.keys(selected_products_la).forEach(product_name => {
 				product_list_wa += product_name.split('_').join(' ')+' : ';
 				let wa_qty = [];
@@ -48,7 +48,7 @@
 				product_list_wa += wa_qty.join(', ')+'\n';
 			});
 			console.log(product_list_wa);
-			window.open('https://web.whatsapp.com://send?text='+product_list_wa);
+			window.open("whatsapp://send?text=" + product_list_wa, '_blank');
 		}
 
 		function getProductHtmlByType(product) {
