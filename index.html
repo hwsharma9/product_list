@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<button type="button" onclick="clearLocalStorage()">Clear All</button>
+	<img src = "https://image.freepik.com/free-vector/whatsapp-icon-design_23-2147900927.jpg" height="50" size="50" onclick="shareOnWA()">  
+	<table id="product_list_table"></table>
+	<script type="text/javascript">
+		let selected_products_la = JSON.parse(localStorage.getItem("selected_products"));
+		if (!selected_products_la) {
+			selected_products_la = {};
+		}
+		const product_list_table = document.getElementById("product_list_table");
+		const product_list = [
+			{
+				product_name: 'Product 1',
+				product_quantity_type: 'KG_GRM'
+			},
+			{
+				product_name: 'Product 2',
+				product_quantity_type: 'QUANTITY'
+			},
+			{
+				product_name: 'Product 3',
+				product_quantity_type: 'LTR_GRM'
+			},
+		];
+
+		function clearLocalStorage() {
+			localStorage.setItem("selected_products", null);
+			location.reload();
+		}
+
+		function shareOnWA() {
+			console.log(selected_products_la);
+			let product_list_wa = '';
+			
+			Object.keys(selected_products_la).forEach(product_name => {
+				product_list_wa += product_name.split('_').join(' ')+' : ';
+				let wa_qty = [];
+				Object.keys(selected_products_la[product_name]).forEach(product_quantity => {
+					wa_qty.push(selected_products_la[product_name][product_quantity]);
+				});
+				product_list_wa += wa_qty.join(', ')+'\n';
+			});
+			console.log(product_list_wa);
+			window.open('https://web.whatsapp.com://send?text='+product_list_wa);
+		}
+
+		function getProductHtmlByType(product) {
+			const types = product.product_quantity_type.split("_");
+			let selects = '';
+			let options = '';
+			const product_name = product.product_name.split(" ").join("_");
+			types.forEach(type => {
+				selects += `<select name="${product_name + '-' + type}">`;
+				let is_selected = '';
+				let selected_value = '';
+				if (selected_products_la.hasOwnProperty(product_name)) {
+					if (selected_products_la[product_name].hasOwnProperty(type)) {
+						selected_value = selected_products_la[product_name][type];
+					}
+				}
+				if (type === 'KG') {
+					for (var i = 0; i <= 50; i++) {
+						if (selected_value != '') {
+							is_selected = selected_value == `${i} KG` ? 'selected="selected"' : '';
+						}
+						options += `<option value="${i} KG" ${is_selected}>${i} KG</option>`;
+					}
+				} else if (type === 'LTR') {
+					for (var i = 0; i <= 50; i++) {
+						if (selected_value != '') {
+							is_selected = selected_value == `${i} Liter` ? 'selected="selected"' : '';
+						}
+						options += `<option value="${i} Liter" ${is_selected}>${i} Liter</option>`;
+					}
+				} else if (type === 'GRM') {
+					for (var i = 0; i <= 10; i++) {
+						if (selected_value != '') {
+							is_selected = selected_value == `${i*100} Gram` ? 'selected="selected"' : '';
+						}
+						options += `<option value="${i*100} Gram" ${is_selected}>${i*100} Gram</option>`;
+					}
+				} else if (type === 'QUANTITY') {
+					for (var i = 0; i <= 100; i++) {
+						if (selected_value != '') {
+							is_selected = selected_value == `${i}` ? 'selected="selected"' : '';
+						}
+						options += `<option value="${i}" ${is_selected}>${i}</option>`;
+					}
+				}
+				selects += `${options}`;
+				selects += `</select>`;
+				options = '';
+				is_selected = '';
+			});
+			return selects;
+		}
+
+		function createProductList() {
+			let product_list_html = '';
+			product_list.forEach(product => {
+				product_list_html += `<tr><td>`;
+				product_list_html += product.product_name;
+				product_list_html += `</td><td>`;
+				product_list_html += getProductHtmlByType(product);
+				product_list_html += `</td></tr>`;
+			});
+			// console.log(product_list_html);
+			product_list_table.innerHTML = product_list_html;
+			addEventListener();
+		}
+
+		function addEventListener() {
+			let selected_products = JSON.parse(localStorage.getItem("selected_products"));
+			if (!selected_products) {
+				selected_products = {};
+			}
+			product_list_table.addEventListener('change', function(e) {
+				const target = e.target;
+				const target_name = e.target.getAttribute('name');
+				let target_name_split = target_name.split('-');
+				const product_name = target_name_split[0];
+				const product_quantity_type = target_name_split[1];
+				console.log(product_quantity_type);
+				const value = target.value;
+				if (!selected_products.hasOwnProperty(product_name)) {
+					selected_products[product_name] = {};
+				}
+				if (selected_products.hasOwnProperty(product_name)) {
+					if (!selected_products[product_name].hasOwnProperty(product_quantity_type)) {
+						selected_products[product_name][product_quantity_type] = {};
+					}
+					if (selected_products[product_name].hasOwnProperty(product_quantity_type)) {
+						selected_products[product_name][product_quantity_type] = value;
+					}
+				}
+				console.log(selected_products);
+				localStorage.setItem("selected_products", JSON.stringify(selected_products));
+				selected_products = JSON.parse(localStorage.getItem("selected_products"));
+			});
+		}
+
+		createProductList();
+	</script>
+</body>
+</html>
