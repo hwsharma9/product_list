@@ -4,11 +4,26 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
+	<style>
+		#pl {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+		}
+		#pl #pl_header {
+			display: flex;
+			justify-content: space-between;
+		}
+	</style>
 </head>
 <body>
-	<button type="button" onclick="clearLocalStorage()">Clear All</button>
-	<img src = "https://image.freepik.com/free-vector/whatsapp-icon-design_23-2147900927.jpg" height="50" size="50" onclick="shareOnWA()">  
-	<table id="product_list_table"></table>
+	<div id="pl">
+		<div id="pl_header">
+			<button type="button" onclick="clearLocalStorage()">Clear All</button>
+			<img src = "https://image.freepik.com/free-vector/whatsapp-icon-design_23-2147900927.jpg" height="50" size="50" onclick="shareOnWA()">
+		</div>
+		<table id="product_list_table"></table>
+	</div>
 	<script type="text/javascript">
 		let selected_products_la = JSON.parse(localStorage.getItem("selected_products"));
 		if (!selected_products_la) {
@@ -104,7 +119,6 @@
 		}
 
 		function shareOnWA() {
-			console.log(selected_products_la);
 			let product_list_wa = '';
 			
 			Object.keys(selected_products_la).forEach(product_name => {
@@ -113,9 +127,8 @@
 				Object.keys(selected_products_la[product_name]).forEach(product_quantity => {
 					wa_qty.push(selected_products_la[product_name][product_quantity]);
 				});
-				product_list_wa += wa_qty.join(', ')+'\n';
+				product_list_wa += wa_qty.join(', ')+'\n\n';
 			});
-			console.log(encodeURIComponent(product_list_wa));
 			window.open("whatsapp://send?text=" + encodeURIComponent(product_list_wa), '_blank');
 		}
 
@@ -179,7 +192,6 @@
 				product_list_html += getProductHtmlByType(product);
 				product_list_html += `</td></tr>`;
 			});
-			// console.log(product_list_html);
 			product_list_table.innerHTML = product_list_html;
 			addEventListener();
 		}
@@ -195,7 +207,6 @@
 				let target_name_split = target_name.split('-');
 				const product_name = target_name_split[0];
 				const product_quantity_type = target_name_split[1];
-				console.log(product_quantity_type);
 				const value = target.value;
 				if (!selected_products.hasOwnProperty(product_name)) {
 					selected_products[product_name] = {};
@@ -208,7 +219,6 @@
 						selected_products[product_name][product_quantity_type] = value;
 					}
 				}
-				console.log(selected_products);
 				localStorage.setItem("selected_products", JSON.stringify(selected_products));
 				selected_products = JSON.parse(localStorage.getItem("selected_products"));
 			});
