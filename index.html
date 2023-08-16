@@ -137,9 +137,12 @@
 
 		function shareOnWA() {
 			let product_list_wa = '';
-			
+			const list = {}
+			product_list.map(product => {
+				list[product.product_name.en.split(" ").join("_")] = product.product_name[language_ls];
+			});
 			Object.keys(selected_products_ls).forEach(product_name => {
-				product_list_wa += product_name.split('_').join(' ')+' : ';
+				product_list_wa += list[product_name]+' : ';
 				let wa_qty = [];
 				Object.keys(selected_products_ls[product_name]).forEach(product_quantity => {
 					wa_qty.push(selected_products_ls[product_name][product_quantity]);
@@ -237,6 +240,7 @@
 					}
 				}
 				localStorage.setItem("selected_products", JSON.stringify(selected_products));
+				console.log(selected_products);
 				selected_products = JSON.parse(localStorage.getItem("selected_products"));
 			});
 		}
