@@ -21,94 +21,106 @@
 		<div id="pl_header">
 			<button type="button" onclick="clearLocalStorage()">Clear All</button>
 			<img src = "https://image.freepik.com/free-vector/whatsapp-icon-design_23-2147900927.jpg" height="50" size="50" onclick="shareOnWA()">
+			<select name="language" id="language">
+				<option value="en">English</option>
+				<option value="hi">हिंदी</option>
+			</select>
 		</div>
 		<table id="product_list_table"></table>
 	</div>
 	<script type="text/javascript">
-		let selected_products_la = JSON.parse(localStorage.getItem("selected_products"));
-		if (!selected_products_la) {
-			selected_products_la = {};
-		}
 		const product_list_table = document.getElementById("product_list_table");
+		const language = document.getElementById("language");
+
+		let selected_products_ls = JSON.parse(localStorage.getItem("selected_products"));
+		if (!selected_products_ls) {
+			selected_products_ls = {};
+		}
+		let language_ls = localStorage.getItem("language");
+		if (!language_ls) {
+			language_ls = 'en';
+		}
+		language.value = language_ls;
+
 		const product_list = [
 			{
-				product_name: 'Tuar Daal',
+				product_name: {en:'Tuar Daal', hi:'तुअर दाल'},
 				product_quantity_type: 'KG_GRM'
 			},
 			{
-				product_name: 'Moong Daal',
+				product_name: {en:'Moong Daal', hi:'मूंग दाल'},
 				product_quantity_type: 'KG_GRM'
 			},
 			{
-				product_name: 'Chawal',
+				product_name: {en:'Chawal', hi:'चावल'},
 				product_quantity_type: 'KG_GRM'
 			},
 			{
-				product_name: 'Rajma',
+				product_name: {en:'Rajma', hi:'राजमा'},
 				product_quantity_type: 'KG_GRM'
 			},
 			{
-				product_name: 'Poha',
+				product_name: {en:'Poha', hi:'पोहा'},
 				product_quantity_type: 'KG_GRM'
 			},
 			{
-				product_name: 'Saabudana',
+				product_name: {en:'Saabudana', hi:'साबूदाना'},
 				product_quantity_type: 'KG_GRM'
 			},
 			{
-				product_name: 'Moongfali Daana',
+				product_name: {en:'Moongfali Daana', hi:'मूंगफली दाना'},
 				product_quantity_type: 'KG_GRM'
 			},
 			{
-				product_name: 'Chhole',
+				product_name: {en:'Chhole', hi:'छोले'},
 				product_quantity_type: 'KG_GRM'
 			},
 			{
-				product_name: 'Chola',
+				product_name: {en:'Chola', hi:'चोला'},
 				product_quantity_type: 'KG_GRM'
 			},
 			{
-				product_name: 'Ghee',
+				product_name: {en:'Ghee', hi:'घी'},
 				product_quantity_type: 'KG_GRM'
 			},
 			{
-				product_name: 'Suji',
+				product_name: {en:'Suji', hi:'सूजी'},
 				product_quantity_type: 'KG_GRM'
 			},
 			{
-				product_name: 'Godrej No. 1 Soap',
+				product_name: {en:'Godrej No. 1 Soap', hi:'गोदरेज No. 1 सोप'},
 				product_quantity_type: 'QUANTITY'
 			},
 			{
-				product_name: 'Wheel Soap',
+				product_name: {en:'Wheel Soap', hi:'व्हील सोप'},
 				product_quantity_type: 'QUANTITY'
 			},
 			{
-				product_name: 'Rin Soap',
+				product_name: {en:'Rin Soap', hi:'रीन सोप'},
 				product_quantity_type: 'QUANTITY'
 			},
 			{
-				product_name: 'Medimix Soap',
+				product_name: {en:'Medimix Soap', hi:'मेडीमिक्स सोप'},
 				product_quantity_type: 'QUANTITY'
 			},
 			{
-				product_name: 'Pasta Masala Packet',
+				product_name: {en:'Pasta Masala Packet', hi:'पास्ता मसाला पैकेट'},
 				product_quantity_type: 'QUANTITY'
 			},
 			{
-				product_name: 'Clinik Plus Shampu',
+				product_name: {en:'Clinik Plus Shampu', hi:'क्लिनिक प्लस शैम्पू'},
 				product_quantity_type: 'QUANTITY'
 			},
 			{
-				product_name: 'Patanjali Shampu',
+				product_name: {en:'Patanjali Shampu', hi:'पतंजलि शैम्पू'},
 				product_quantity_type: 'QUANTITY'
 			},
 			{
-				product_name: 'Soya Been Oil',
+				product_name: {en:'Soya Been Oil', hi:'सोयाबीन आयल'},
 				product_quantity_type: 'LTR_GRM'
 			},
 			{
-				product_name: 'Nariyal Oil',
+				product_name: {en:'Nariyal Oil', hi:'नारियल आयल'},
 				product_quantity_type: 'LTR_GRM'
 			},
 		];
@@ -118,14 +130,19 @@
 			location.reload();
 		}
 
+		language.addEventListener("change", function(e) {
+			localStorage.setItem("language", e.target.value);
+			location.reload();
+		});
+
 		function shareOnWA() {
 			let product_list_wa = '';
 			
-			Object.keys(selected_products_la).forEach(product_name => {
+			Object.keys(selected_products_ls).forEach(product_name => {
 				product_list_wa += product_name.split('_').join(' ')+' : ';
 				let wa_qty = [];
-				Object.keys(selected_products_la[product_name]).forEach(product_quantity => {
-					wa_qty.push(selected_products_la[product_name][product_quantity]);
+				Object.keys(selected_products_ls[product_name]).forEach(product_quantity => {
+					wa_qty.push(selected_products_ls[product_name][product_quantity]);
 				});
 				product_list_wa += wa_qty.join(', ')+'\n\n';
 			});
@@ -136,14 +153,14 @@
 			const types = product.product_quantity_type.split("_");
 			let selects = '';
 			let options = '';
-			const product_name = product.product_name.split(" ").join("_");
+			const product_name = product.product_name.en.split(" ").join("_");
 			types.forEach(type => {
 				selects += `<select name="${product_name + '-' + type}">`;
 				let is_selected = '';
 				let selected_value = '';
-				if (selected_products_la.hasOwnProperty(product_name)) {
-					if (selected_products_la[product_name].hasOwnProperty(type)) {
-						selected_value = selected_products_la[product_name][type];
+				if (selected_products_ls.hasOwnProperty(product_name)) {
+					if (selected_products_ls[product_name].hasOwnProperty(type)) {
+						selected_value = selected_products_ls[product_name][type];
 					}
 				}
 				if (type === 'KG') {
@@ -187,7 +204,7 @@
 			let product_list_html = '';
 			product_list.forEach(product => {
 				product_list_html += `<tr><td>`;
-				product_list_html += product.product_name;
+				product_list_html += product.product_name[language_ls];
 				product_list_html += `</td><td>`;
 				product_list_html += getProductHtmlByType(product);
 				product_list_html += `</td></tr>`;
