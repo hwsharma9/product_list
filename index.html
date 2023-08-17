@@ -14,6 +14,27 @@
 			display: flex;
 			justify-content: space-between;
 		}
+		#product_list_table {
+			    list-style-type: disc;
+			    margin-block-start: 1em;
+			    margin-block-end: 1em;
+			    margin-inline-start: 0px;
+			    margin-inline-end: 0px;
+			    padding-inline-start: 5px;
+			    color: #FFFF;
+			    font-weight: bold;
+		}
+		#product_list_table li {
+			display: flex;
+			justify-content: space-between;
+			background-color: #927474;
+			margin-bottom: 15px;
+			padding: 10px 10px;
+		}
+
+		.selected_li {
+			background-color: #6a5454 !important;
+		}
 	</style>
 </head>
 <body>
@@ -26,7 +47,7 @@
 				<option value="hi">हिंदी</option>
 			</select>
 		</div>
-		<table id="product_list_table"></table>
+		<ul id="product_list_table"></ul>
 	</div>
 	<script type="text/javascript">
 		const product_list_table = document.getElementById("product_list_table");
@@ -104,6 +125,22 @@
 				product_quantity_type: 'QUANTITY'
 			},
 			{
+				product_name:{en: "Johnson Baby Shampu", hi: "जॉनसन बेबी शैम्पू"},
+				product_quantity_type: 'KG_GRM',
+			},
+			{
+				product_name:{en: "Himalaya Soap", hi: "हिमालया सोप"},
+				product_quantity_type: 'KG_GRM',
+			},
+			{
+				product_name:{en: "Peer Soap", hi: "पीर सोप"},
+				product_quantity_type: 'KG_GRM',
+			},
+			{
+				product_name:{en: "Handwash", hi: "हैंडवाश"},
+				product_quantity_type: 'KG_GRM',
+			},
+			{
 				product_name: {en:'Pasta Masala Packet', hi:'पास्ता मसाला पैकेट'},
 				product_quantity_type: 'QUANTITY'
 			},
@@ -116,12 +153,152 @@
 				product_quantity_type: 'QUANTITY'
 			},
 			{
+				product_name:{en: "Colgate", hi: "कोलगेट"},
+				product_quantity_type: 'QUANTITY',
+			},
+			{
+				product_name:{en: "Maggie", hi: "मैगी"},
+				product_quantity_type: 'QUANTITY',
+			},
+			{
+				product_name:{en: "20-20 Biskit", hi: "20-20 बिस्किट"},
+				product_quantity_type: 'QUANTITY',
+			},
+			{
+				product_name:{en: "Sendha Salt", hi: "सेंधा साल्ट"},
+				product_quantity_type: 'QUANTITY',
+			},
+			{
+				product_name:{en: "Tata Salt", hi: "टाटा साल्ट"},
+				product_quantity_type: 'QUANTITY',
+			},
+			{
 				product_name: {en:'Soya Been Oil', hi:'सोयाबीन आयल'},
 				product_quantity_type: 'LTR_GRM'
 			},
 			{
 				product_name: {en:'Nariyal Oil', hi:'नारियल आयल'},
 				product_quantity_type: 'LTR_GRM'
+			},
+			{
+				product_name:{en: "Skin Frouit Creem", hi: "स्किन फ्रुट क्रीम"},
+				product_quantity_type: 'KG_GRM',
+			},
+			{
+				product_name:{en: "Himalaya Creem", hi: "हिमालया क्रीम"},
+				product_quantity_type: 'KG_GRM',
+			},
+			{
+				product_name:{en: "Shesha Oil", hi: "शेषा आयल"},
+				product_quantity_type: 'KG_GRM',
+			},
+			{
+				product_name:{en: "Pasta", hi: "पास्ता"},
+				product_quantity_type: 'KG_GRM',
+			},
+			{
+				product_name:{en: "Maida", hi: "मैदा"},
+				product_quantity_type: 'KG_GRM',
+			},
+			{
+				product_name:{en: "Dhuli Moong Daal", hi: "धुली मूंग दाल"},
+				product_quantity_type: 'KG_GRM',
+			},
+			{
+				product_name:{en: "Jeera", hi: "जीरा"},
+				product_quantity_type: 'KG_GRM',
+			},
+			{
+				product_name:{en: "Raai", hi: "राई"},
+				product_quantity_type: 'KG_GRM',
+			},
+			{
+				product_name:{en: "Ajvain", hi: "अजवाइन"},
+				product_quantity_type: 'KG_GRM',
+			},
+			{
+				product_name:{en: "Heeng", hi: "हींग"},
+				product_quantity_type: 'QUANTITY',
+			},
+			{
+				product_name:{en: "Tomato Catchup", hi: "टोमेटो कैचअप "},
+				product_quantity_type: 'QUANTITY',
+			},
+			{
+				product_name:{en: "Kashmiri Laal Meerch", hi: "कश्मीरी लाल मिर्च"},
+				product_quantity_type: 'KG_GRM',
+			},
+			{
+				product_name:{en: "Rajma Masala", hi: "राजमा मसाला"},
+				product_quantity_type: 'QUANTITY',
+			},
+			{
+				product_name:{en: "Shahi Paneer Masala", hi: "शाही पनीर मसाला"},
+				product_quantity_type: 'QUANTITY',
+			},
+			{
+				product_name:{en: "Garam Masala", hi: "गरम मसाला"},
+				product_quantity_type: 'QUANTITY',
+			},
+			{
+				product_name:{en: "Sabji Masala", hi: "सब्जी मसाला"},
+				product_quantity_type: 'QUANTITY',
+			},
+			{
+				product_name:{en: "Panipuri Masala", hi: "पानीपुरी मसाला"},
+				product_quantity_type: 'QUANTITY',
+			},
+			{
+				product_name:{en: "Chola Masala", hi: "चोला मसाला"},
+				product_quantity_type: 'QUANTITY',
+			},
+			{
+				product_name:{en: "Sambhar Masala", hi: "सांभर मसाला"},
+				product_quantity_type: 'QUANTITY',
+			},
+			{
+				product_name:{en: "Paao Bhaji Masala", hi: "पाओ भाजी मसाला"},
+				product_quantity_type: 'QUANTITY',
+			},
+			{
+				product_name:{en: "Sabudana Khichdi Masala", hi: "साबूदाना खिचड़ी मसाला"},
+				product_quantity_type: 'QUANTITY',
+			},
+			{
+				product_name:{en: "Bornveeta", hi: "बोर्नवीटा"},
+				product_quantity_type: 'QUANTITY',
+			},
+			{
+				product_name:{en: "Harpik", hi: "हार्पिक"},
+				product_quantity_type: 'QUANTITY',
+			},
+			{
+				product_name:{en: "Paapad", hi: "पापड"},
+				product_quantity_type: 'KG_GRM',
+			},
+			{
+				product_name:{en: "Soaf", hi: "सॉफ"},
+				product_quantity_type: 'KG_GRM',
+			},
+			{
+				product_name:{en: "Ilaichi", hi: "इलाइची"},
+				product_quantity_type: 'KG_GRM',
+			},
+			{
+				product_name:{en: "Chala Daal", hi: "चना दाल"},
+				product_quantity_type: 'KG_GRM',
+			},
+			{
+				product_name:{en: "Masoor Daal", hi: "मसूर दाल"},
+				product_quantity_type: 'KG_GRM',
+			},
+			{
+				product_name:{en: "Dhokla", hi: "ढोकला"},
+				product_quantity_type: 'QUANTITY',
+			},
+			{
+				product_name:{en: "Idli", hi: "इडली"},
+				product_quantity_type: 'QUANTITY',
 			},
 		];
 
@@ -150,6 +327,10 @@
 				product_list_wa += wa_qty.join(', ')+'\n\n';
 			});
 			window.open("whatsapp://send?text=" + encodeURIComponent(product_list_wa), '_blank');
+		}
+
+		function checkProductSelected(product_name) {
+			return selected_products_ls.hasOwnProperty(product_name);
 		}
 
 		function getProductHtmlByType(product) {
@@ -206,11 +387,16 @@
 		function createProductList() {
 			let product_list_html = '';
 			product_list.forEach(product => {
-				product_list_html += `<tr><td>`;
+				let p_name = product.product_name['en'];
+				let p_id = 'product_'+p_name.split(" ").join("_");
+				product_list_html += `<li id="${p_id}"><span>`;
 				product_list_html += product.product_name[language_ls];
-				product_list_html += `</td><td>`;
+				product_list_html += `</span><span>`;
 				product_list_html += getProductHtmlByType(product);
-				product_list_html += `</td></tr>`;
+				product_list_html += `</span></li>`;
+				// if (selected_products_ls.hasOwnProperty(p_name)) {
+				// 	document.getElementById(p_id).classList.add("selected_li");
+				// }
 			});
 			product_list_table.innerHTML = product_list_html;
 			addEventListener();
@@ -238,9 +424,24 @@
 					if (selected_products[product_name].hasOwnProperty(product_quantity_type)) {
 						selected_products[product_name][product_quantity_type] = value;
 					}
+					let exclude_array = ['0 KG', '0 Gram', '0 LTR'];
+					let length = Object.keys(selected_products[product_name]).length;
+					let count = 0;
+					Object.keys(selected_products[product_name]).forEach(function (key) {
+						if(exclude_array.includes(selected_products[product_name][key])) {
+							count++;
+						}
+					});
+					let p_id = 'product_'+product_name;
+					console.log(p_id);
+					if(length == count) {
+						delete selected_products[product_name];
+						document.getElementById('product_'+product_name).classList.remove("selected_li");
+					} else {
+						document.getElementById('product_'+product_name).classList.add("selected_li");
+					}
 				}
 				localStorage.setItem("selected_products", JSON.stringify(selected_products));
-				console.log(selected_products);
 				selected_products = JSON.parse(localStorage.getItem("selected_products"));
 			});
 		}
